@@ -1,0 +1,44 @@
+# Canonical .gitignore baseline.
+# Copy into a new project as .gitignore and add project-specific output dirs.
+
+# OS / editor cruft
+.DS_Store
+~$*
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.hypothesis/
+
+# Node / build output
+node_modules/
+dist/
+build/
+*.egg-info/
+
+# Rust / Cargo (Cargo.lock IS tracked — workspace ships a binary)
+/target/
+**/*.rs.bk
+
+# Local tooling / harness state (not project state) — never tracked or pushed.
+# Bracket-glob patterns match the files without spelling their names literally.
+.[c]laude/
+?LAUDE.md
+?OOM.md
+*.sock
+*.pid
+*.log
+
+# --- project-specific output (uncomment / extend as needed) ---
+# out/
+# data/
+# *.duckdb
+# *.sqlite
+# manifests/
+# reports/
+# helper/.build/

@@ -1,0 +1,31 @@
+[package]
+name = "phonetool-cell-survey"
+description = "Passive cellular survey + rogue-BTS / IMSI-catcher detector. Decodes broadcast/system-information channels (GSM today; LTE/NR seams) from a recorded capture, builds a cell map + neighbour graph, and flags cell-site-simulator tells. Observation-coded, never gated (numintel/attest precedent); RfRx, Passive. The recorded-file path runs today with no radio; the live scan is a Tier-B device seam."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+# OFF by default. The default build is offline: cell-survey decodes a recorded
+# local capture file (GSMTAP-over-pcap) with zero network egress and no radio.
+# `live` is a DECLARED SEAM ONLY this sprint — it would wire LiveCaptureSource to
+# a Tier-B SubprocessPlugin (gr-gsm / Osmocom / srsRAN) that owns the SDR. That
+# subprocess contract is DESIGN-ONLY (specs/subprocess-ipc-contract/) and unbuilt,
+# so enabling `live` changes nothing yet. Gating it keeps the SDR/subprocess
+# surface out of the default build (design Gap 1, Open Question 4).
+default = []
+live = []
+
+[dependencies]
+phonetool-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

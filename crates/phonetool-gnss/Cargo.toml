@@ -1,0 +1,19 @@
+[package]
+name = "phonetool-gnss"
+description = "Passive GNSS receive + spoof/jam integrity plugin. Acquires GPS L1 C/A, decodes nav message, solves PVT, and qualifies every fix with a spoof/jam verdict. Runs today on IqFileSource (no antenna). Integrity is the defensive payload."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+phonetool-core = { workspace = true }
+phonetool-sdr-rx = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+rustfft = { workspace = true }
+num-complex = { workspace = true }

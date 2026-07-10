@@ -1,0 +1,30 @@
+[package]
+name = "phonetool-attest"
+description = "Passive STIR/SHAKEN attestation inspection. Reads what a call claims about its own origin (PASSporT/Identity header) — observation-coded, never gated (numintel precedent). Offline-default structural parse; an off-by-default `online` feature adds the x5u cert fetch + ES256 verification (egress, attacker-influenced URL)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+# OFF by default. The default build is air-gapped: attest performs total
+# STRUCTURAL inspection only (StructuralOnly verdict) and pulls in no HTTP/TLS
+# or crypto client. `online` adds the x5u certificate fetch + ES256 signature
+# verification — network egress and an attacker-influenced request — and is an
+# explicit opt-in, mirroring numintel's model. NOTE: the online `verify` module
+# is a declared seam only in Sprint 11; it is blocked on three operator Open
+# Questions (trust-anchor provisioning, x5u host allowlist, pure-Rust crypto
+# crate choice) recorded in specs/attest/. See lib.rs.
+default = []
+online = ["dep:reqwest"]
+
+[dependencies]
+phonetool-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+reqwest = { workspace = true, optional = true }

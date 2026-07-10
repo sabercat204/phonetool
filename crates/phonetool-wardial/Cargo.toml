@@ -1,0 +1,17 @@
+[package]
+name = "phonetool-wardial"
+description = "Active IP-layer plugin: DID-range enumeration by SIP origination (the modern wardial). Axis-A active capability — dispatched only with a Grant the auth-gate minted, and it acts on the DID range carried in that Grant, nothing else. Origination is billable + attributable + can ring a real person, so it layers a cost/attribution acknowledgement on top of the gate. Uses std::net only (zero egress dependency); the origination path is inert without both a Grant and a TrunkConfig."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+phonetool-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }

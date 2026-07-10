@@ -1,0 +1,28 @@
+[package]
+name = "phonetool-ss7"
+description = "Passive, offline SS7/Diameter signalling analyzer: decodes a supplied SIGTRAN (M3UA/SCTP) SCCP/TCAP/MAP stack and Diameter S6a from a capture and flags the privacy-sensitive operations (location-disclosure, intercept-enabling). Observation-coded — never gated. Zero egress deps on the analysis path; a live signalling link is an off-by-default `live` seam (unbuilt)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+# OFF by default. The analysis path (hex + pcap) is pure and links no egress
+# crate. `live` is a DECLARED SEAM: a live SIGTRAN/Diameter peer source that
+# implements the same CaptureSource trait. It is carrier- and hardware-gated
+# (a provisioned point code / Diameter peering) and unbuilt this sprint.
+default = []
+live = []
+
+[dependencies]
+phonetool-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

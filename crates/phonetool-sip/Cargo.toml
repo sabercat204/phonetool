@@ -1,0 +1,17 @@
+[package]
+name = "phonetool-sip"
+description = "Active IP-layer plugin: SIP extension enumeration over UDP. Axis-A active capability — dispatched only with a Grant the auth-gate minted, and it acts on the target carried in that Grant, nothing else. Uses std::net only (no egress dependency); the socket path fires solely inside an authorized, gated operation."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+phonetool-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }

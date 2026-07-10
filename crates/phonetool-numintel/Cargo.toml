@@ -1,0 +1,28 @@
+[package]
+name = "phonetool-numintel"
+description = "First plugin: number intelligence. Passive/observation-coded — never gated. Offline by default (reads the cache); an off-by-default `online` feature adds a live carrier/number-intelligence lookup that leaks the target number off-box."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+# OFF by default. The default build is air-gapped: numintel serves from the cache
+# only and pulls in no HTTP client. Enabling `online` is an explicit opt-in to the
+# one non-air-gapped path in this plugin (see the threat note in lookup.rs).
+default = []
+online = ["dep:reqwest"]
+
+[dependencies]
+phonetool-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+reqwest = { workspace = true, optional = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

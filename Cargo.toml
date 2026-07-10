@@ -1,0 +1,80 @@
+# phonetool — full-spectrum telecom workbench (platform + plugins) for a portable
+# ARM SBC. Workspace idiom mirrors a prior in-house project (resolver 3, edition 2024,
+# forbid-unsafe, deny-unwrap/expect/indexing) — same untrusted-byte-parsing domain:
+# SIP responses, HLR data, and caller-ID are all adversary input, so the parsing
+# path must never panic and raw `buf[i]` indexing is a compile error here.
+#
+# unsafe is permitted ONLY inside future FFI-quarantine crates (soapysdr, gpio)
+# behind off-by-default features — never in the core / gate / cli / numintel.
+[workspace]
+resolver = "3"
+members = [
+    "crates/phonetool-authgate",
+    "crates/phonetool-core",
+    "crates/phonetool-numintel",
+    "crates/phonetool-baittriage",
+    "crates/phonetool-attest",
+    "crates/phonetool-cell-survey",
+    "crates/phonetool-ss7",
+    "crates/phonetool-legacy-hw",
+    "crates/phonetool-sip",
+    "crates/phonetool-wardial",
+    "crates/phonetool-sdr-rx",
+    "crates/phonetool-rf-tx",
+    "crates/phonetool-gnss",
+    "crates/phonetool-subprocess",
+    "crates/phonetool-cli",
+]
+
+[workspace.package]
+version = "0.17.0"
+edition = "2024"
+rust-version = "1.89"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[workspace.dependencies]
+# --- internal crates ---
+phonetool-authgate = { path = "crates/phonetool-authgate" }
+phonetool-core = { path = "crates/phonetool-core" }
+phonetool-numintel = { path = "crates/phonetool-numintel" }
+phonetool-baittriage = { path = "crates/phonetool-baittriage" }
+phonetool-attest = { path = "crates/phonetool-attest" }
+phonetool-cell-survey = { path = "crates/phonetool-cell-survey" }
+phonetool-ss7 = { path = "crates/phonetool-ss7" }
+phonetool-legacy-hw = { path = "crates/phonetool-legacy-hw" }
+phonetool-sip = { path = "crates/phonetool-sip" }
+phonetool-wardial = { path = "crates/phonetool-wardial" }
+phonetool-sdr-rx = { path = "crates/phonetool-sdr-rx" }
+phonetool-rf-tx = { path = "crates/phonetool-rf-tx" }
+phonetool-gnss = { path = "crates/phonetool-gnss" }
+phonetool-subprocess = { path = "crates/phonetool-subprocess" }
+# --- external (pure-Rust; keeps the offline build a static aarch64-musl binary) ---
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
+# reqwest is pulled in ONLY under numintel's off-by-default `online` feature —
+# it must never enter the default (air-gapped) build graph.
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "blocking", "json"] }
+# --- DSP (pure Rust, no unsafe, no network) ---
+rustfft = "6"
+num-complex = "0.4"
+# --- dev ---
+tempfile = "3"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+indexing_slicing = "deny"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1

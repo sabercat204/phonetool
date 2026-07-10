@@ -1,0 +1,30 @@
+[package]
+name = "phonetool-legacy-hw"
+description = "The copper/lineman physical-I/O layer, passive half: DTMF/MF Goertzel decode, Bell-202 Caller-ID FSK decode, loop/line electrical-state sensing, and DTMF/MF/2600-SF tone synthesis to a WAV — all over supplied audio/traces, no hardware. Observation-coded, never gated. Active physical injection (loop seizure, tone injection onto a live pair) is out of scope: it needs the Axis-C WireGrant AND a hardware-safety interlock in the off-by-default FFI-quarantine crate (unbuilt)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+# OFF by default. The default build is the four passive DSP/sense verbs over
+# supplied WAV/PCM buffers and recorded traces — no GPIO/ADC/relay/SLIC. `device`
+# is a DECLARED SEAM for the future FFI-quarantine crate (phonetool-linehw-ffi,
+# gpio-cdev/linux-embedded-hal) that alone relaxes unsafe_code=forbid and would
+# hold the live line-sense source and (only once the gate gap is resolved AND the
+# hardware-safety interlock exists) the injection driver. Unbuilt this sprint.
+default = []
+device = []
+
+[dependencies]
+phonetool-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

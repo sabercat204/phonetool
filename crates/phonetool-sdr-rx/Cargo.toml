@@ -1,0 +1,18 @@
+[package]
+name = "phonetool-sdr-rx"
+description = "Passive SDR receive plugin: sweep, identify, and demodulate RF signals from IQ files. No gate, no hardware, no FFI — pure-Rust file-proof path. Defines the SdrSource trait seam that downstream layers (GNSS, cell-survey) consume."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+phonetool-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+rustfft = { workspace = true }
+num-complex = { workspace = true }

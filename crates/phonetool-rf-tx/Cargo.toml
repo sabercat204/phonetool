@@ -1,0 +1,30 @@
+[package]
+name = "phonetool-rf-tx"
+description = "The workbench's transmit path and first Axis-B consumer: modulates an operator payload (CW, AFSK/AX.25) into a waveform and renders it to a file. Every transmit is gated on a TxGrant (regulatory axis). The default build has NO device sink — emission is structurally impossible; a real radio is an off-by-default FFI-quarantine seam. Zero egress deps, unsafe forbidden."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+# OFF by default. The default build renders waveforms to a FILE and contains no
+# device sink — keying a real radio is a COMPILE error, not a runtime one. `device`
+# is a DECLARED SEAM for the future FFI-quarantine crate (soapysdr/HackRF/Lime/Pluto)
+# whose key path additionally takes a &TxGrant (double lock: feature AND token).
+# Unbuilt this sprint.
+default = []
+device = []
+
+[dependencies]
+phonetool-core = { workspace = true }
+phonetool-authgate = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

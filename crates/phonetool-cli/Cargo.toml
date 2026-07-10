@@ -1,0 +1,39 @@
+[package]
+name = "phonetool-cli"
+description = "The phonetool console binary: constructs the workbench shell, registers plugins, and dispatches operator commands through it."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "phonetool"
+path = "src/main.rs"
+
+[features]
+default = []
+# Forwards to numintel's + attest's online opt-ins; the default console build
+# is air-gapped.
+online = ["phonetool-numintel/online", "phonetool-attest/online"]
+
+[dependencies]
+phonetool-core = { workspace = true }
+phonetool-numintel = { workspace = true }
+phonetool-baittriage = { workspace = true }
+phonetool-attest = { workspace = true }
+phonetool-cell-survey = { workspace = true }
+phonetool-ss7 = { workspace = true }
+phonetool-legacy-hw = { workspace = true }
+phonetool-sip = { workspace = true }
+phonetool-wardial = { workspace = true }
+phonetool-sdr-rx = { workspace = true }
+phonetool-rf-tx = { workspace = true }
+phonetool-gnss = { workspace = true }
+clap = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }

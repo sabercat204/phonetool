@@ -1,0 +1,32 @@
+[package]
+name = "phonetool-baittriage"
+description = "Passive fraud-caller footprint triage: ingests operator-supplied artifacts about a scam/vishing caller, extracts and normalizes indicators, correlates them against the offline intel store, and reports a confidence-scored footprint. Observation-coded — never gated. Offline by default; an off-by-default `online` feature (declared seam, unbuilt) would add opt-in provider enrichment."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+# OFF by default. The default build is air-gapped: baittriage correlates against
+# the local store only and pulls in no HTTP client. `online` is a DECLARED SEAM —
+# it reserves the provider-enrichment path (numintel's model) but is not built in
+# Sprint 14 (the provider Open Question is unresolved). Enabling it today changes
+# nothing but keeps the flag name stable for when it lands.
+default = []
+online = ["dep:reqwest"]
+
+[dependencies]
+phonetool-core = { workspace = true }
+phonetool-numintel = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+reqwest = { workspace = true, optional = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
